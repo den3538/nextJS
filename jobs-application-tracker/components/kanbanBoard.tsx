@@ -1,2 +1,1 @@
-export function KanbanBoard() {
-    
+export function KanbanBoard() {}

@@ -4,20 +4,26 @@ import { ArrowRight, Briefcase, CheckCircle2, TrendingUp } from "lucide-react";
 
 import Link from "next/link";
 
-
-
 export default function Home() {
   return (
     <div className="flex flex-col grow bg-white">
       <main className="flex-1">
         <section className="container mx-auto px-4 py-32">
           <div className="mx-auto max-w-4xl text-center flex flex-col gap-5">
-            <h1 className="text-black mb-6 text-6xl font-bold">A better way to track your job applications</h1>
-            <p className="text-muted-foreground mb-10 text-xl">Keep all your job applications organized in one place.</p>
+            <h1 className="text-black mb-6 text-6xl font-bold">
+              A better way to track your job applications
+            </h1>
+            <p className="text-muted-foreground mb-10 text-xl">
+              Keep all your job applications organized in one place.
+            </p>
             <Link href="/sign-up">
-              <Button size={"lg"} className="h-12 px-8 text-lg font-medium">Start tracking <ArrowRight /></Button>
+              <Button size={"lg"} className="h-12 px-8 text-lg font-medium">
+                Start tracking <ArrowRight />
+              </Button>
             </Link>
-            <p className="text-muted-foreground text-sm ">It&apos;s free and easy to use.</p>
+            <p className="text-muted-foreground text-sm ">
+              It&apos;s free and easy to use.
+            </p>
           </div>
         </section>
 

@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { client, db } from "../db";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 export const auth = betterAuth({
   database: mongodbAdapter(db, {
     client,
@@ -16,4 +17,14 @@ export async function getSession() {
     headers: await headers(),
   });
   return result;
+}
+
+export async function signOut() {
+  const result = await auth.api.signOut({
+    headers: await headers(),
+  });
+
+  if (result.success) {
+    redirect("/sign-in");
+  }
 }

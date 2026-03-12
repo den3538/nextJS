@@ -1,10 +1,21 @@
+"use client";
+
 import { Briefcase } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { getSession } from "@/lib/auth/auth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "./ui/avatar";
+import { SignOutButton } from "./sign-out-button";
+import { useSession } from "@/lib/auth/auth-client";
 
-const Navbar = async () => {
-  const session = await getSession();
+const Navbar = () => {
+  const { data: session } = useSession();
   return (
     <nav className="bg-white p-4 shadow border-2 sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -19,16 +30,43 @@ const Navbar = async () => {
           </div>
           <div className="flex items-center justify-between space-x-4 flex-1">
             <div className="flex gap-2">
-              <Link
-                href="/dashboard"
-                className="text-gray-600 hover:text-gray-800"
-              >
-                Dashboard
-              </Link>
+              {session?.user && (
+                <Link
+                  href="/dashboard"
+                  className="text-gray-600 hover:text-gray-800"
+                >
+                  Dashboard
+                </Link>
+              )}
             </div>
             <div className="flex gap-2">
               {session?.user ? (
-                <></>
+                <>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger
+                      asChild
+                      className="hover:cursor-pointer"
+                    >
+                      <Avatar>
+                        <AvatarFallback className="text-gray-800 rounded-full data-open:bg-primary data-open:text-white">
+                          {session.user.name.charAt(0).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      sideOffset={10}
+                      align="center"
+                      className="bg-white border rounded-md shadow-lg p-2 w-auto max-w-auto"
+                    >
+                      <DropdownMenuLabel className="truncate">
+                        {session.user.email}
+                      </DropdownMenuLabel>
+                      <DropdownMenuItem className="justify-center">
+                        <SignOutButton />
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </>
               ) : (
                 <>
                   <Button className="text-white" variant={"default"}>

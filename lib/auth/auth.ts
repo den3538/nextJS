@@ -3,12 +3,24 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { client, db } from "../db";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { initializeUserBoard } from "../init-user-board";
 export const auth = betterAuth({
   database: mongodbAdapter(db, {
     client,
   }),
   emailAndPassword: {
     enabled: true,
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          if (user) {
+            await initializeUserBoard(user.id);
+          }
+        },
+      },
+    },
   },
 });
 

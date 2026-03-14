@@ -13,9 +13,11 @@ import {
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { SignOutButton } from "./sign-out-button";
 import { useSession } from "@/lib/auth/auth-client";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const { data: session } = useSession();
+  const pathname = usePathname();
   return (
     <nav className="bg-white p-4 shadow border-2 sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -33,7 +35,7 @@ const Navbar = () => {
               {session?.user && (
                 <Link
                   href="/dashboard"
-                  className="text-gray-600 hover:text-gray-800"
+                  className={`text-gray-600 hover:text-gray-800 ${pathname === "/dashboard" && "text-gray-800"}`}
                 >
                   Dashboard
                 </Link>

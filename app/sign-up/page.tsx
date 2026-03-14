@@ -38,6 +38,7 @@ export default function SignUpPage() {
       });
 
       if (request.error) {
+        console.error("Sign-up error:", request.error);
         setError(
           request.error.message ||
             "Failed to create an account. Please try again.",
@@ -48,6 +49,7 @@ export default function SignUpPage() {
     } catch (err) {
       if (err instanceof Error) {
         setError("Failed to create an account. Please try again.");
+        console.error("Sign-up error:", err.message);
       }
     } finally {
       setLoading(false);

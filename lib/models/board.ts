@@ -22,3 +22,5 @@ const BoardSchema: Schema = new Schema<IBoard>(
 
 export const Board =
   mongoose.models.Board || mongoose.model<IBoard>("Board", BoardSchema);
+
+export default Board;

@@ -16,7 +16,7 @@ export default async function DashboardPage() {
   const board = await Board.findOne({
     userId: session.user.id,
     name: DEFAULT_BOARD_NAME,
-  });
+  }).populate("columns");
 
   if (!board) {
     return (
@@ -37,7 +37,10 @@ export default async function DashboardPage() {
             Track your job applications and progress here.
           </p>
         </div>
-        <KanbanBoard board={board} userId={session.user.id} />
+        <KanbanBoard
+          board={JSON.parse(JSON.stringify(board))}
+          userId={session.user.id}
+        />
       </div>
     </div>
   );

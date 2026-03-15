@@ -10,7 +10,7 @@ export interface IJobApplication extends Document {
   userId: string;
   order: number;
   notes?: string;
-  salary?: number;
+  salary?: string;
   jobUrl?: string;
   appliedDate?: Date;
   tags?: string[];
@@ -40,7 +40,7 @@ const JobApplicationSchema: Schema = new Schema<IJobApplication>(
     userId: { type: String, required: true },
     order: { type: Number, required: true },
     notes: { type: String },
-    salary: { type: Number },
+    salary: { type: String },
     jobUrl: { type: String },
     appliedDate: { type: Date },
     tags: [{ type: String }],

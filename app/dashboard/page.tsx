@@ -4,19 +4,44 @@ import { getSession } from "@/lib/auth/auth";
 import { dbConnect } from "@/lib/db";
 import { Board } from "@/lib/models";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
-export default async function DashboardPage() {
+export async function getBoard(userId: string) {
+  "use cache";
+  await dbConnect();
+
+  const boardDoc = await Board.findOne({
+    userId: userId,
+    name: DEFAULT_BOARD_NAME,
+  }).populate({
+    path: "columns",
+    populate: {
+      path: "jobApplications",
+    },
+  });
+
+  if (!boardDoc) {
+    return null;
+  }
+
+  return JSON.parse(JSON.stringify(boardDoc));
+}
+
+function DashboardPageSkeleton() {
+  return (
+    <div className="flex-1 flex items-center justify-center h-full">
+      <p className="text-gray-500">Loading your dashboard...</p>
+    </div>
+  );
+}
+
+async function Dashboard() {
   const session = await getSession();
   if (!session?.user) {
     redirect("/sign-in");
   }
 
-  await dbConnect();
-
-  const board = await Board.findOne({
-    userId: session.user.id,
-    name: DEFAULT_BOARD_NAME,
-  }).populate("columns");
+  const board = await getBoard(session.user.id);
 
   if (!board) {
     return (
@@ -43,5 +68,13 @@ export default async function DashboardPage() {
         />
       </div>
     </div>
+  );
+}
+
+export default async function DashboardPage() {
+  return (
+    <Suspense fallback={<DashboardPageSkeleton />}>
+      <Dashboard />
+    </Suspense>
   );
 }

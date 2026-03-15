@@ -13,7 +13,8 @@ import {
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
+import { addJobApplication } from "@/lib/actions/job-application";
 
 interface CreateJobApplicationDialogProps {
   colId: string;
@@ -21,54 +22,44 @@ interface CreateJobApplicationDialogProps {
   onCreated?: () => void;
 }
 
+const DEFAULT_FORM_DATA = {
+  company: "",
+  position: "",
+  location: "",
+  salary: "",
+  jobUrl: "",
+  tags: "",
+  description: "",
+  notes: "",
+};
+
 export function CreateJobApplicationDialog({
   colId,
   boardId,
   onCreated,
 }: CreateJobApplicationDialogProps) {
   const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    company: "",
-    position: "",
-    location: "",
-    salary: "",
-    jobUrl: "",
-    tags: "",
-    description: "",
-    notes: "",
-  });
+  const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/job-applications", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          columnId: colId,
-          boardId,
-        }),
+      const result = await addJobApplication({
+        ...formData,
+        columnId: colId,
+        boardId,
+        tags: formData.tags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter((tag) => tag.length),
       });
 
-      if (response.ok) {
-        setOpen(false);
-        setFormData({
-          company: "",
-          position: "",
-          location: "",
-          salary: "",
-          jobUrl: "",
-          tags: "",
-          description: "",
-          notes: "",
-        });
-        if (onCreated) {
-          onCreated();
-        }
+      if (result.error) {
+        console.error("Error creating job application:", result.error);
+        return;
       }
+      setFormData(DEFAULT_FORM_DATA);
+      setOpen(false);
     } catch (error) {
       console.error("Error creating job application:", error);
     }

@@ -6,7 +6,8 @@
     "dev": "next dev -p 3538",
     "build": "next build",
     "start": "next start -p 3538",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed:jobs": "tsx --env-file=.env scripts/seed.ts"
   },
   "dependencies": {
     "better-auth": "^1.5.5",
@@ -33,6 +34,7 @@
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.8.1",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

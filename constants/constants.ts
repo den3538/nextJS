@@ -1,7 +1,7 @@
 export const DEFAULT_BOARD_NAME = "My Job Search Journey";
 export const DEFAULT_COLUMNS = [
   {
-    name: "Whish list",
+    name: "Wish list",
     order: 0,
   },
   {

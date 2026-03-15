@@ -186,7 +186,6 @@ function SortableJobCard({
 export function KanbanBoard({ board }: KanbanBoardProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const { columns, moveJob, isPending } = useBoards(board);
-  console.log("columns in kanban board:", columns);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {

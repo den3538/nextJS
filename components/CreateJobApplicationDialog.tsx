@@ -36,7 +36,6 @@ const DEFAULT_FORM_DATA = {
 export function CreateJobApplicationDialog({
   colId,
   boardId,
-  onCreated,
 }: CreateJobApplicationDialogProps) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);

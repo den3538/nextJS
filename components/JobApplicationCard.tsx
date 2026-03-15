@@ -22,17 +22,19 @@ import {
 } from "./ui/dialog";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
-import { SyntheticEvent, useState } from "react";
+import { HTMLAttributes, SyntheticEvent, useState } from "react";
 import { Input } from "./ui/input";
 
 interface JobApplicationCardProps {
   job: JobApplication;
   columns: Column[];
+  dragHandleProps?: HTMLAttributes<HTMLElement>;
 }
 
 export default function JobApplicationCard({
   job,
   columns,
+  dragHandleProps,
 }: JobApplicationCardProps) {
   const [formData, setFormData] = useState({
     company: job.company,
@@ -94,7 +96,10 @@ export default function JobApplicationCard({
 
   return (
     <div>
-      <Card className="cursor-pointer transition-shadow hover:shadow-lg">
+      <Card
+        className="cursor-pointer transition-shadow hover:shadow-lg"
+        {...dragHandleProps}
+      >
         <CardContent>
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1 min-w-0">

@@ -65,28 +65,37 @@ export default function ImageTabs() {
         </div>
         <div className="relative mx-auto max-w-5xl overflow-hidden rounded-lg border border-gray-200 shadow-2xl flex">
           {activeTab === "organize" && (
-            <Image
-              src={"/demo-images/hero1.png"}
-              alt="Organize Applications"
-              width={1200}
-              height={800}
-            />
+            <picture>
+              <source srcSet="/demo-images/hero1.webp" type="image/webp" />
+              <Image
+                src="/demo-images/hero1.jpg"
+                alt="Organize Applications"
+                width={1200}
+                height={800}
+              />
+            </picture>
           )}
           {activeTab === "get-hired" && (
-            <Image
-              src={"/demo-images/hero2.png"}
-              alt="Hero Image"
-              width={1200}
-              height={800}
-            />
+            <picture>
+              <source srcSet="/demo-images/hero2.webp" type="image/webp" />
+              <Image
+                src="/demo-images/hero2.jpg"
+                alt="Get Hired"
+                width={1200}
+                height={800}
+              />
+            </picture>
           )}
           {activeTab === "manage-boards" && (
-            <Image
-              src={"/demo-images/hero3.png"}
-              alt="Hero Image"
-              width={1200}
-              height={800}
-            />
+            <picture>
+              <source srcSet="/demo-images/hero3.webp" type="image/webp" />
+              <Image
+                src="/demo-images/hero3.jpg"
+                alt="Manage Boards"
+                width={1200}
+                height={800}
+              />
+            </picture>
           )}
         </div>
       </div>

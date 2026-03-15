@@ -296,9 +296,8 @@ export function KanbanBoard({ board }: KanbanBoardProps) {
       }
 
       if (!targetColumnId) return;
-
-      await moveJob(activeId, targetColumnId, newOrder);
     }
+    await moveJob(activeId, targetColumnId, newOrder);
   }
 
   const activeJob = useMemo<JobApplication | undefined>(() => {

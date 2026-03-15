@@ -319,7 +319,7 @@ export function KanbanBoard({ board }: KanbanBoardProps) {
       id={dndContextId}
     >
       <div className={`${isPending ? "opacity-50" : ""} space-y-4`}>
-        <div className="flex gap-4 overflow-x-auto pb-4 max-w-full px-2">
+        <div className="flex gap-4 overflow-x-auto pb-4 max-w-full px-2 min-h-100">
           {sortedColumns.map((col, index) => {
             const config = COLUMN_CONFIG[index] ?? {
               name: col.name,

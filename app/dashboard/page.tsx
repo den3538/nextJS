@@ -55,7 +55,7 @@ async function Dashboard() {
 
   return (
     <div className="flex-1 flex">
-      <div className="container mx-auto p-6 max-w-7xl">
+      <div className="container mx-auto p-6 max-w-9xl">
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-black">{board.name}</h1>
           <p className="text-muted-foreground">

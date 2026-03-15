@@ -84,6 +84,7 @@
   --foreground: oklch(0.145 0 0);
   --success: oklch(0.74 0.24442 142.125);
   --whish: oklch(81.848% 0.2082 126.389);
+  --max-9xl: 1440px;
 }
 
 .dark {

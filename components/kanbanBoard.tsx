@@ -39,7 +39,7 @@ import {
 } from "@dnd-kit/sortable";
 
 import { CSS } from "@dnd-kit/utilities";
-import { useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 
 interface KanbanBoardProps {
   board: Board;
@@ -132,6 +132,7 @@ function DroppableColumn({
         >
           {sortedJobs.map((job) => (
             <SortableJobCard
+              id={job._id}
               key={job._id}
               job={{ ...job, columnId: job.columnId ?? column._id }}
               columns={sortedColumns ?? []}
@@ -145,9 +146,11 @@ function DroppableColumn({
 }
 
 function SortableJobCard({
+  id,
   job,
   columns,
 }: {
+  id: string;
   job: JobApplication;
   columns: Column[];
 }) {
@@ -159,7 +162,7 @@ function SortableJobCard({
     isDragging,
     setNodeRef,
   } = useSortable({
-    id: job._id,
+    id,
     data: {
       type: "job",
       job,
@@ -304,12 +307,15 @@ export function KanbanBoard({ board }: KanbanBoardProps) {
       .flatMap((col) => col.jobApplications || [])
       .find((job) => job._id === activeId);
   }, [activeId, sortedColumns]);
+
+  const dndContextId = useId();
   return (
     <DndContext
       sensors={sensors}
       collisionDetection={closestCorners}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
+      id={dndContextId}
     >
       <div className={`${isPending ? "opacity-50" : ""} space-y-4`}>
         <div className="flex gap-4 overflow-x-auto pb-4 max-w-full px-2">
@@ -321,7 +327,7 @@ export function KanbanBoard({ board }: KanbanBoardProps) {
             };
             return (
               <DroppableColumn
-                key={index}
+                key={col._id}
                 column={col}
                 config={config}
                 boardId={board._id}

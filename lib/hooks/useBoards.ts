@@ -3,7 +3,6 @@
 import { useEffect, useState, useTransition } from "react";
 import { Board, Column, JobApplication } from "../models/models.types";
 import { updateJobApplication } from "../actions/job-application";
-import { start } from "repl";
 
 export function useBoards(initialBoard?: Board | null) {
   const [columns, setColumns] = useState<Column[]>(initialBoard?.columns ?? []);
@@ -11,6 +10,14 @@ export function useBoards(initialBoard?: Board | null) {
   const [isPending, startTransition] = useTransition();
 
   const board = initialBoard;
+
+  useEffect(() => {
+    if (initialBoard?.columns) {
+      startTransition(() => {
+        setColumns(initialBoard.columns);
+      });
+    }
+  }, [initialBoard, startTransition]);
 
   async function moveJob(
     jobApplicationId: string,

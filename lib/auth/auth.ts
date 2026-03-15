@@ -1,9 +1,17 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import { client, db } from "../db";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { initializeUserBoard } from "../init-user-board";
+import { dbConnect } from "../db";
+
+const mongooseInstance = await dbConnect();
+if (!mongooseInstance) {
+  throw new Error("Failed to connect to the database");
+}
+const client = mongooseInstance.connection.getClient();
+const db = client.db();
+
 export const auth = betterAuth({
   database: mongodbAdapter(db, {
     client,

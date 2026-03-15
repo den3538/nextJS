@@ -106,7 +106,8 @@ function DroppableColumn({
           <span>{config.icon}</span>
           <span>{column.name}</span>
         </div>
-        <DropdownMenu>
+        {/* todo: implement column actions */}
+        {/* <DropdownMenu>
           <DropdownMenuTrigger className="outline-none data-[state=open]:bg-muted hover:bg-muted hover:cursor-pointer rounded-md p-2">
             <MoreVertical className="h-4 w-4" />
           </DropdownMenuTrigger>
@@ -120,7 +121,7 @@ function DroppableColumn({
               Delete Column
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
       </CardHeader>
       <CardContent
         ref={setNodeRef}
